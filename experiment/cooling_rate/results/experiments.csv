@@ -1,2 +1,6 @@
 exp_id,timestamp,number_of_points,noise_coeff,pinn_collocation_points,parameter_discovery_collocation_points,pinn_loss2_weight,parameter_discovery_loss_2_weight,pinn_epochs,parameter_discovery_epochs,R_true,R_discovered,R_error_pct,pinn_final_loss,assets_folder
 exp1,2026-04-12T10:35:55,10,2,1000,1000,1,1,30000,40000,0.005,0.004404547158628702,11.9091,0.2232,results/assets/exp1
+exp2,2026-04-12T11:13:55,10,2,1000,1000,1,0.1,30000,40000,0.005,-0.00031958206091076136,106.3916,0.178128,results/assets/exp2
+exp3,2026-04-12T11:16:23,10,2,1000,1000,1,0.5,30000,40000,0.005,0.004762934986501932,4.7413,0.245409,results/assets/exp3
+exp4,2026-04-12T11:18:46,10,2,1000,1000,1,1.5,30000,40000,0.005,0.004494784399867058,10.1043,0.208739,results/assets/exp4
+exp5,2026-04-12T11:21:32,10,2,1000,1000,1,2.0,30000,40000,0.005,0.0045510027557611465,8.9799,0.223561,results/assets/exp5
