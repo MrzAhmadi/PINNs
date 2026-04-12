@@ -1,12 +1,15 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
+import torch.utils.data as thdat
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 
 def np_to_th(x):
     n_samples = len(x)
     return torch.from_numpy(x).to(torch.float).to(DEVICE).reshape(n_samples, -1)
+
 
 class Net(nn.Module):
     def __init__(
@@ -31,19 +34,20 @@ class Net(nn.Module):
 
         self.layers = nn.Sequential(
             nn.Linear(input_dim, self.n_units),
-            nn.SiLU(),
+            nn.ReLU(),
             nn.Linear(self.n_units, self.n_units),
-            nn.SiLU(),
+            nn.ReLU(),
             nn.Linear(self.n_units, self.n_units),
-            nn.SiLU(),
+            nn.ReLU(),
             nn.Linear(self.n_units, self.n_units),
-            nn.SiLU(),
+            nn.ReLU(),
         )
         self.out = nn.Linear(self.n_units, output_dim)
 
     def forward(self, x):
         h = self.layers(x)
         out = self.out(h)
+
         return out
 
     def fit(self, X, y):
@@ -62,19 +66,15 @@ class Net(nn.Module):
             loss.backward()
             optimiser.step()
             losses.append(loss.item())
-
-            # Custom callback for discovery
-            if hasattr(self, 'r_history'):
-                self.r_history.append(self.r.item())
-
             if ep % int(self.epochs / 10) == 0:
-                print(f"Epoch {ep}/{self.epochs}, loss: {losses[-1]:.4f}")
+                print(f"Epoch {ep}/{self.epochs}, loss: {losses[-1]:.2f}")
         return losses
 
     def predict(self, X):
         self.eval()
         out = self.forward(np_to_th(X))
         return out.detach().cpu().numpy()
+
 
 class NetDiscovery(Net):
     def __init__(
@@ -91,5 +91,5 @@ class NetDiscovery(Net):
         super().__init__(
             input_dim, output_dim, n_units, epochs, loss, lr, loss2, loss2_weight
         )
-        self.r = nn.Parameter(data=torch.tensor([0.001]))
-        self.r_history = []
+
+        self.r = nn.Parameter(data=torch.tensor([0.]))
