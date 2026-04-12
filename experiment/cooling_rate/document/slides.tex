@@ -1,0 +1,404 @@
+\documentclass[aspectratio=169]{beamer}
+\usetheme{Madrid}
+\usepackage{graphicx}
+\usepackage{booktabs}
+
+% Relative path: document/ is sibling to results/
+\graphicspath{{../}}
+
+\title{Comprehensive Sensitivity Analysis}
+\subtitle{18 Experiments on PINN for Newton's Law of Cooling}
+\author{Reza}
+\date{April 12, 2026}
+
+\begin{document}
+
+% ==========================================
+% TITLE & GLOBAL INTRODUCTION
+% ==========================================
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}{Global Introduction}
+    \begin{itemize}
+        \item \textbf{Objective:} Systematic evaluation of Physics-Informed Neural Network (PINN) performance.
+        \item \textbf{Scope:} 18 experiments testing the sensitivity to loss weights, collocation density, and data sparsity.
+        \item \textbf{Methodology:} One-Factor-at-a-Time (OFAT) parameter variation.
+        \item \textbf{Key Metric:} Percentage error of the discovered cooling rate $R$ against the true physical value.
+    \end{itemize}
+\end{frame}
+
+% ==========================================
+% GROUP 1: BASELINE (EXP 1)
+% ==========================================
+\begin{frame}
+    \centering
+    \Huge \textbf{Group 1: Baseline Configuration}\\
+    \large Establishing the standard for comparison
+\end{frame}
+
+\begin{frame}{Experiment 1: Baseline}
+    \begin{columns}
+        \column{0.3\textwidth}
+        \textbf{Configuration:}\\
+        Points: 10\\
+        Colloc: 1000\\
+        Weight $L_2$: 1.0\\
+        \vspace{0.4cm}
+        \textbf{Result:}\\
+        $R_{disc}$: 0.0044\\
+        Error: 11.91\%
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp1/pinn_prediction.jpg}
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp1/pd_prediction.jpg}
+    \end{columns}
+\end{frame}
+
+% ==========================================
+% GROUP 2: PHYSICS WEIGHTS (EXP 2 - 5)
+% ==========================================
+\begin{frame}
+    \centering
+    \Huge \textbf{Group 2: Physics Loss Weights}\\
+    \large Varying the Discovery Weight ($L_2$) from 0.1 to 2.0
+\end{frame}
+
+\begin{frame}{Experiment 2}
+    \begin{columns}
+        \column{0.3\textwidth}
+        \textbf{Configuration:}\\
+        Points: 10\\
+        Colloc: 1000\\
+        Weight $L_2$: 0.1\\
+        \vspace{0.4cm}
+        \textbf{Result:}\\
+        $R_{disc}$: -0.0003\\
+        Error: 106.39\% \\
+        (Physics Diverged)
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp2/pinn_prediction.jpg}
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp2/pd_prediction.jpg}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Experiment 3}
+    \begin{columns}
+        \column{0.3\textwidth}
+        \textbf{Configuration:}\\
+        Points: 10\\
+        Colloc: 1000\\
+        Weight $L_2$: 0.5\\
+        \vspace{0.4cm}
+        \textbf{Result:}\\
+        $R_{disc}$: 0.00476\\
+        Error: 4.74\%
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp3/pinn_prediction.jpg}
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp3/pd_prediction.jpg}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Experiment 4}
+    \begin{columns}
+        \column{0.3\textwidth}
+        \textbf{Configuration:}\\
+        Points: 10\\
+        Colloc: 1000\\
+        Weight $L_2$: 1.5\\
+        \vspace{0.4cm}
+        \textbf{Result:}\\
+        $R_{disc}$: 0.00449\\
+        Error: 10.10\%
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp4/pinn_prediction.jpg}
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp4/pd_prediction.jpg}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Experiment 5}
+    \begin{columns}
+        \column{0.3\textwidth}
+        \textbf{Configuration:}\\
+        Points: 10\\
+        Colloc: 1000\\
+        Weight $L_2$: 2.0\\
+        \vspace{0.4cm}
+        \textbf{Result:}\\
+        $R_{disc}$: 0.00455\\
+        Error: 8.98\%
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp5/pinn_prediction.jpg}
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp5/pd_prediction.jpg}
+    \end{columns}
+\end{frame}
+
+% ==========================================
+% GROUP 3: COLLOCATION DENSITY (EXP 6 - 9)
+% ==========================================
+\begin{frame}
+    \centering
+    \Huge \textbf{Group 3: Collocation Density}\\
+    \large Impact of reducing Physics Resolution (100 down to 10)
+\end{frame}
+
+\begin{frame}{Experiment 6}
+    \begin{columns}
+        \column{0.3\textwidth}
+        \textbf{Configuration:}\\
+        Points: 10\\
+        Colloc: 100\\
+        Weight $L_2$: 1.0\\
+        \vspace{0.4cm}
+        \textbf{Result:}\\
+        $R_{disc}$: 0.00544\\
+        Error: 8.88\%
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp6/pinn_prediction.jpg}
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp6/pd_prediction.jpg}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Experiment 7}
+    \begin{columns}
+        \column{0.3\textwidth}
+        \textbf{Configuration:}\\
+        Points: 10\\
+        Colloc: 50\\
+        Weight $L_2$: 1.0\\
+        \vspace{0.4cm}
+        \textbf{Result:}\\
+        $R_{disc}$: 0.00565\\
+        Error: 13.03\%
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp7/pinn_prediction.jpg}
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp7/pd_prediction.jpg}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Experiment 8}
+    \begin{columns}
+        \column{0.3\textwidth}
+        \textbf{Configuration:}\\
+        Points: 10\\
+        Colloc: 20\\
+        Weight $L_2$: 1.0\\
+        \vspace{0.4cm}
+        \textbf{Result:}\\
+        $R_{disc}$: 0.00455\\
+        Error: 9.01\%
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp8/pinn_prediction.jpg}
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp8/pd_prediction.jpg}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Experiment 9}
+    \begin{columns}
+        \column{0.3\textwidth}
+        \textbf{Configuration:}\\
+        Points: 10\\
+        Colloc: 10\\
+        Weight $L_2$: 1.0\\
+        \vspace{0.4cm}
+        \textbf{Result:}\\
+        $R_{disc}$: 0.00490\\
+        Error: 1.99\%
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp9/pinn_prediction.jpg}
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp9/pd_prediction.jpg}
+    \end{columns}
+\end{frame}
+
+% ==========================================
+% GROUP 4: INCREASED COLLOCATIONS (EXP 10 - 13)
+% ==========================================
+\begin{frame}
+    \centering
+    \Huge \textbf{Group 4: Higher Resolution Density}\\
+    \large Testing increased collocation bounds (1250 to 2000)
+\end{frame}
+
+\begin{frame}{Experiment 10}
+    \begin{columns}
+        \column{0.3\textwidth}
+        \textbf{Configuration:}\\
+        Points: 10\\
+        Colloc: 1250\\
+        Weight $L_2$: 1.0\\
+        \vspace{0.4cm}
+        \textbf{Result:}\\
+        $R_{disc}$: 0.00498\\
+        Error: 0.40\%
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp10/pinn_prediction.jpg}
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp10/pd_prediction.jpg}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Experiment 11}
+    \begin{columns}
+        \column{0.3\textwidth}
+        \textbf{Configuration:}\\
+        Points: 10\\
+        Colloc: 1500\\
+        Weight $L_2$: 1.0\\
+        \vspace{0.4cm}
+        \textbf{Result:}\\
+        $R_{disc}$: 0.00493\\
+        Error: 1.46\%
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp11/pinn_prediction.jpg}
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp11/pd_prediction.jpg}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Experiment 12}
+    \begin{columns}
+        \column{0.3\textwidth}
+        \textbf{Configuration:}\\
+        Points: 10\\
+        Colloc: 1750\\
+        Weight $L_2$: 1.0\\
+        \vspace{0.4cm}
+        \textbf{Result:}\\
+        $R_{disc}$: 0.00507\\
+        Error: 1.32\%
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp12/pinn_prediction.jpg}
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp12/pd_prediction.jpg}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Experiment 13}
+    \begin{columns}
+        \column{0.3\textwidth}
+        \textbf{Configuration:}\\
+        Points: 10\\
+        Colloc: 2000\\
+        Weight $L_2$: 1.0\\
+        \vspace{0.4cm}
+        \textbf{Result:}\\
+        $R_{disc}$: 0.00536\\
+        Error: 7.13\%
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp13/pinn_prediction.jpg}
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp13/pd_prediction.jpg}
+    \end{columns}
+\end{frame}
+
+% ==========================================
+% GROUP 5: INCREASED DATA POINTS (EXP 14 - 18)
+% ==========================================
+\begin{frame}
+    \centering
+    \Huge \textbf{Group 5: Increased Data Density}\\
+    \large Assessing Network response to more observations (25 to 150)
+\end{frame}
+
+\begin{frame}{Experiment 14}
+    \begin{columns}
+        \column{0.3\textwidth}
+        \textbf{Configuration:}\\
+        Points: 25\\
+        Colloc: 1000\\
+        Weight $L_2$: 1.0\\
+        \vspace{0.4cm}
+        \textbf{Result:}\\
+        $R_{disc}$: 0.00051\\
+        Error: 89.72\%\\
+        (Significant Drop)
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp14/pinn_prediction.jpg}
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp14/pd_prediction.jpg}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Experiment 15}
+    \begin{columns}
+        \column{0.3\textwidth}
+        \textbf{Configuration:}\\
+        Points: 50\\
+        Colloc: 1000\\
+        Weight $L_2$: 1.0\\
+        \vspace{0.4cm}
+        \textbf{Result:}\\
+        $R_{disc}$: 0.00454\\
+        Error: 9.25\%
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp15/pinn_prediction.jpg}
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp15/pd_prediction.jpg}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Experiment 16}
+    \begin{columns}
+        \column{0.3\textwidth}
+        \textbf{Configuration:}\\
+        Points: 75\\
+        Colloc: 1000\\
+        Weight $L_2$: 1.0\\
+        \vspace{0.4cm}
+        \textbf{Result:}\\
+        $R_{disc}$: 0.00466\\
+        Error: 6.74\%
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp16/pinn_prediction.jpg}
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp16/pd_prediction.jpg}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Experiment 17}
+    \begin{columns}
+        \column{0.3\textwidth}
+        \textbf{Configuration:}\\
+        Points: 100\\
+        Colloc: 1000\\
+        Weight $L_2$: 1.0\\
+        \vspace{0.4cm}
+        \textbf{Result:}\\
+        $R_{disc}$: 0.00537\\
+        Error: 7.47\%
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp17/pinn_prediction.jpg}
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp17/pd_prediction.jpg}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Experiment 18}
+    \begin{columns}
+        \column{0.3\textwidth}
+        \textbf{Configuration:}\\
+        Points: 150\\
+        Colloc: 1000\\
+        Weight $L_2$: 1.0\\
+        \vspace{0.4cm}
+        \textbf{Result:}\\
+        $R_{disc}$: 0.00067\\
+        Error: 86.53\%\\
+        (Significant Drop)
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp18/pinn_prediction.jpg}
+        \column{0.35\textwidth}
+        \includegraphics[width=\textwidth]{results/assets/exp18/pd_prediction.jpg}
+    \end{columns}
+\end{frame}
+
+\end{document}

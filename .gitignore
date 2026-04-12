@@ -50,3 +50,26 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
+
+
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.dvi
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.nav
+*.out
+*.run.xml
+*.snm
+*.synctex.gz
+*.toc
+*.pdf
+*.ps
+*.eps
+*.brf
+*.dvi
