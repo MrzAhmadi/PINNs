@@ -5,11 +5,9 @@ import torch.utils.data as thdat
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-
 def np_to_th(x):
     n_samples = len(x)
     return torch.from_numpy(x).to(torch.float).to(DEVICE).reshape(n_samples, -1)
-
 
 class Net(nn.Module):
     def __init__(
@@ -20,6 +18,7 @@ class Net(nn.Module):
         epochs=1000,
         loss=nn.MSELoss(),
         lr=1e-3,
+        loss1=None,
         loss2=None,
         loss2_weight=0.1,
     ) -> None:
@@ -31,6 +30,7 @@ class Net(nn.Module):
         self.loss2_weight = loss2_weight
         self.lr = lr
         self.n_units = n_units
+        self.loss1 = loss1
 
         self.layers = nn.Sequential(
             nn.Linear(input_dim, self.n_units),
@@ -61,8 +61,10 @@ class Net(nn.Module):
             optimiser.zero_grad()
             outputs = self.forward(Xt)
             loss = self.loss(yt, outputs)
-            if self.loss2:
-                loss += self.loss2_weight * self.loss2(self)
+            if self.loss1 is not None:
+                loss += self.loss1(self)
+            if self.loss2 is not None:
+                loss += self.loss2(self) * self.loss2_weight
             loss.backward()
             optimiser.step()
             losses.append(loss.item())
@@ -74,7 +76,6 @@ class Net(nn.Module):
         self.eval()
         out = self.forward(np_to_th(X))
         return out.detach().cpu().numpy()
-
 
 class NetDiscovery(Net):
     def __init__(
@@ -89,7 +90,14 @@ class NetDiscovery(Net):
         loss2_weight=0.1,
     ) -> None:
         super().__init__(
-            input_dim, output_dim, n_units, epochs, loss, lr, loss2, loss2_weight
+            input_dim=input_dim,
+            output_dim=output_dim,
+            n_units=n_units,
+            epochs=epochs,
+            loss=loss,
+            lr=lr,
+            loss2=loss2,
+            loss2_weight=loss2_weight
         )
 
         self.r = nn.Parameter(data=torch.tensor([0.]))
