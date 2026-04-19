@@ -24,6 +24,10 @@ class Net(nn.Module):
     ) -> None:
         super().__init__()
 
+        print("Loss1:",loss1)
+        print("Loss2:",loss2)
+
+
         self.epochs = epochs
         self.loss = loss
         self.loss2 = loss2
