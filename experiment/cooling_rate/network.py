@@ -90,6 +90,7 @@ class NetDiscovery(Net):
         epochs=1000,
         loss=nn.MSELoss(),
         lr=0.001,
+        loss1=None,
         loss2=None,
         loss2_weight=0.1,
     ) -> None:
@@ -100,6 +101,7 @@ class NetDiscovery(Net):
             epochs=epochs,
             loss=loss,
             lr=lr,
+            loss1=loss1,
             loss2=loss2,
             loss2_weight=loss2_weight
         )
